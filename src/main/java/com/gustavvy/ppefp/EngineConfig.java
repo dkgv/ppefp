@@ -2,6 +2,7 @@ package com.gustavvy.ppefp;
 
 import com.gustavvy.ppefp.enums.Granularity;
 import com.gustavvy.ppefp.enums.Period;
+import com.gustavvy.ppefp.model.Interval;
 import com.gustavvy.ppefp.service.HistoricalDataService;
 import com.gustavvy.ppefp.strategy.PatternMatcher;
 
@@ -10,42 +11,12 @@ import com.gustavvy.ppefp.strategy.PatternMatcher;
  *
  * @author Gustav V. Y
  */
-public class EngineConfig {
-
-	private final String ticker;
-	private Period period;
-	private Granularity granularity;
-	private final PatternMatcher patternMatcher;
-	private final HistoricalDataService dataService;
-
-	private EngineConfig(String ticker, Period period, Granularity granularity, PatternMatcher patternMatcher,
-	                    HistoricalDataService dataService) {
-		this.ticker = ticker;
-		this.period = period;
-		this.granularity = granularity;
-		this.patternMatcher = patternMatcher;
-		this.dataService = dataService;
-	}
-
-	public Period getPeriod() {
-		return period;
-	}
-
-	public Granularity getGranularity() {
-		return granularity;
-	}
-
-	public String getTicker() {
-		return ticker;
-	}
-
-	public PatternMatcher getPatternMatcher() {
-		return patternMatcher;
-	}
-
-	public HistoricalDataService getDataService() {
-		return dataService;
-	}
+public record EngineConfig(String ticker,
+                           Period period,
+                           Granularity granularity,
+                           Interval needleInterval,
+                           PatternMatcher patternMatcher,
+                           HistoricalDataService dataService) {
 
 	public static EngineConfigBuilder builder() {
 		return new EngineConfigBuilder();
@@ -54,6 +25,7 @@ public class EngineConfig {
 	public static class EngineConfigBuilder {
 
 		private String ticker;
+		private Interval needleInterval;
 		private Period period;
 		private Granularity granularity;
 		private HistoricalDataService dataService;
@@ -84,8 +56,13 @@ public class EngineConfig {
 			return this;
 		}
 
+		public EngineConfigBuilder setNeedleInterval(Interval needleInterval) {
+			this.needleInterval = needleInterval;
+			return this;
+		}
+
 		public EngineConfig build() {
-			return new EngineConfig(ticker, period, granularity, patternMatcher, dataService);
+			return new EngineConfig(ticker, period, granularity, needleInterval, patternMatcher, dataService);
 		}
 	}
 }

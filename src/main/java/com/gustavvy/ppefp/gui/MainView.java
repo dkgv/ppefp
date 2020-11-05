@@ -1,7 +1,6 @@
 package com.gustavvy.ppefp.gui;
 
 import com.gustavvy.ppefp.EngineConfig;
-import com.gustavvy.ppefp.model.Interval;
 import com.gustavvy.ppefp.model.Segment;
 
 import javax.swing.*;
@@ -19,13 +18,13 @@ public class MainView extends JFrame {
 		setLayout(new BorderLayout());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		var dataset = config.getDataService().fetch(config.getTicker(), config.getPeriod(), config.getGranularity());
-		addChart("AAPL (" + config.getPeriod() + " w/" + config.getGranularity() + ")", dataset, BorderLayout.WEST);
+		var dataset = config.dataService().fetch(config.ticker(), config.period(), config.granularity());
+		addChart("Historic " + config.ticker() + " (" + config.period() + " w/" + config.granularity() + ")", dataset, BorderLayout.WEST);
 
-		var pattern = dataset.range(Interval.PAST_7_UNITS);
-		addChart("AAPL (Last 7 days)", pattern, BorderLayout.CENTER);
+		var pattern = dataset.range(config.needleInterval());
+		addChart("Needle Performance", pattern, BorderLayout.CENTER);
 
-		var match = config.getPatternMatcher().match(dataset, pattern);
+		var match = config.patternMatcher().match(dataset, pattern);
 		addChart("Best Match", match, BorderLayout.EAST);
 
 		pack();
