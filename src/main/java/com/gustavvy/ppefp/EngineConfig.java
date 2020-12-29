@@ -4,7 +4,7 @@ import com.gustavvy.ppefp.enums.Granularity;
 import com.gustavvy.ppefp.enums.Period;
 import com.gustavvy.ppefp.model.Interval;
 import com.gustavvy.ppefp.service.HistoricalDataService;
-import com.gustavvy.ppefp.strategy.PatternMatcher;
+import com.gustavvy.ppefp.strategy.SlidingWindowMatcher;
 
 /**
  * EngineConfig.java
@@ -15,7 +15,7 @@ public record EngineConfig(String ticker,
                            Period period,
                            Granularity granularity,
                            Interval needleInterval,
-                           PatternMatcher patternMatcher,
+                           SlidingWindowMatcher patternMatcher,
                            HistoricalDataService dataService) {
 
 	public static EngineConfigBuilder builder() {
@@ -29,7 +29,7 @@ public record EngineConfig(String ticker,
 		private Period period;
 		private Granularity granularity;
 		private HistoricalDataService dataService;
-		private PatternMatcher patternMatcher;
+		private SlidingWindowMatcher patternMatcher;
 
 		public EngineConfigBuilder setPeriod(Period period) {
 			this.period = period;
@@ -46,7 +46,7 @@ public record EngineConfig(String ticker,
 			return this;
 		}
 
-		public EngineConfigBuilder setPatternMatcher(PatternMatcher patternMatcher) {
+		public EngineConfigBuilder setPatternMatcher(SlidingWindowMatcher patternMatcher) {
 			this.patternMatcher = patternMatcher;
 			return this;
 		}

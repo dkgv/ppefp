@@ -15,23 +15,23 @@ public class MainView extends JFrame {
 
 	public MainView(EngineConfig config) {
 		setTitle("ppefp");
-		setLayout(new BorderLayout());
+		setLayout(new GridLayout(3, 1));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		var dataset = config.dataService().fetch(config.ticker(), config.period(), config.granularity());
-		addChart("Historic " + config.ticker() + " (" + config.period() + " w/" + config.granularity() + ")", dataset, BorderLayout.WEST);
+		addChart("Historic " + config.ticker() + " (" + config.period() + " w/" + config.granularity() + ")", dataset);
 
 		var pattern = dataset.range(config.needleInterval());
-		addChart("Needle Performance", pattern, BorderLayout.CENTER);
+		addChart("Needle Performance", pattern);
 
 		var match = config.patternMatcher().match(dataset, pattern);
-		addChart("Best Match", match, BorderLayout.EAST);
+		addChart("Best Match", match);
 
 		pack();
 		setLocationRelativeTo(null);
 	}
 
-	private void addChart(String title, Segment dataset, String location) {
-		add(new CandlestickChart(title, dataset), location);
+	private void addChart(String title, Segment dataset) {
+		add(new CandlestickChart(title, dataset));
 	}
 }

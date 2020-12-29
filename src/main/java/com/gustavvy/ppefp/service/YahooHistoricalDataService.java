@@ -49,10 +49,10 @@ public class YahooHistoricalDataService implements HistoricalDataService {
 		for (Iterator<JsonElement> iterator = timestamps.iterator(); iterator.hasNext(); k++) {
 			JsonElement timestamp = iterator.next();
 
-			var high = highs.get(k).getAsFloat();
-			var low = lows.get(k).getAsFloat();
-			var open = opens.get(k).getAsFloat();
-			var close = closes.get(k).getAsFloat();
+			var high = highs.get(k).getAsDouble();
+			var low = lows.get(k).getAsDouble();
+			var open = opens.get(k).getAsDouble();
+			var close = closes.get(k).getAsDouble();
 
 			candlesticks[k] = new Candlestick(timestamp.getAsLong(), high, low, open, close);
 		}
