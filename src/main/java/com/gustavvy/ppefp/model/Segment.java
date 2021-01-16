@@ -23,6 +23,14 @@ public record Segment(Candlestick[] candlesticks) {
 		return end().timestamp() - start().timestamp();
 	}
 
+	public Return followingReturn(int days) {
+		var start = start().close();
+		var end = candlesticks[days - 1].close();
+		var percentage = (end - start) / start * 100.0;
+		var exact = end - start;
+		return new Return(percentage, exact);
+	}
+
 	public boolean intersects(Segment other) {
 		var otherStart = other.start().timestamp();
 		var startIntersects = otherStart >= start().timestamp() && otherStart <= end().timestamp();

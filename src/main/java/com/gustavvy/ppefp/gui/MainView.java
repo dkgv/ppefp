@@ -27,6 +27,8 @@ public class MainView extends JFrame {
 		var match = config.patternMatcher().match(dataset, pattern);
 		addChart("Best Match", match);
 
+		System.out.println(7 + " " + match.followingReturn(7));
+
 		pack();
 		setLocationRelativeTo(null);
 	}
