@@ -26,7 +26,6 @@ public class SoftmaxNormalizer implements Normalizer {
 		var normalized = new Candlestick[cs.length];
 		for (int i = 0; i < cs.length; i++) {
 			var c = cs[i];
-
 			var high = Math.exp(c.high()) / highSum;
 			var low = Math.exp(c.low()) / lowSum;
 			var open = Math.exp(c.open()) / openSum;
